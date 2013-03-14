@@ -16,6 +16,7 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <vector>
 
 #include "maidsafe/common/rsa.h"
 #include "maidsafe/common/types.h"
@@ -76,6 +77,7 @@ class Passport {
   void CreateSelectableFobPair(const NonEmptyString& chosen_name);
   void ConfirmSelectableFobPair(const NonEmptyString& chosen_name);
   void DeleteSelectableFobPair(const NonEmptyString& chosen_name);
+  std::vector<NonEmptyString> GetSelectableFobNameList(bool confirmed);
 
   friend class test::PassportTest;
 

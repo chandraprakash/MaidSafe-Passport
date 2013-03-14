@@ -225,7 +225,18 @@ void Passport::DeleteSelectableFobPair(const NonEmptyString& chosen_name) {
   pending_selectable_fobs_.erase(chosen_name);
 }
 
-
+std::vector<NonEmptyString> Passport::GetSelectableFobNameList(bool confirmed) {
+  std::vector<NonEmptyString> fob_name_list;
+  std::lock_guard<std::mutex> lock(selectable_mutex_);
+  if (confirmed) {
+    for (auto &fob : confirmed_selectable_fobs_)
+      fob_name_list.push_back(fob.first);
+  } else {
+    for (auto &fob : pending_selectable_fobs_)
+      fob_name_list.push_back(fob.first);
+  }
+  return std::move(fob_name_list);
+}
 
 template<>
 Anmid Passport::Get<Anmid>(bool confirmed) {
